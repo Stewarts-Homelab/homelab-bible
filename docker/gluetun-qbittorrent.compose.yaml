@@ -1,0 +1,43 @@
+# Reconstructed custom WireGuard example. Runtime validation pending.
+services:
+  gluetun:
+    image: ${GLUETUN_IMAGE:?select a versioned Gluetun image}
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      VPN_SERVICE_PROVIDER: custom
+      VPN_TYPE: wireguard
+      WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY:?set local secret}
+      WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES:?set assigned tunnel CIDR}
+      WIREGUARD_ENDPOINT_IP: ${WIREGUARD_ENDPOINT_IP:?set provider endpoint IP}
+      WIREGUARD_ENDPOINT_PORT: ${WIREGUARD_ENDPOINT_PORT:?set provider endpoint port}
+      WIREGUARD_PUBLIC_KEY: ${WIREGUARD_PUBLIC_KEY:?set provider peer public key}
+      VPN_PORT_FORWARDING: "off"
+    ports:
+      - "127.0.0.1:${QBITTORRENT_HOST_PORT:-8080}:8080"
+    volumes:
+      - type: bind
+        source: ${GLUETUN_CONFIG_DIR:?set a clean config directory}
+        target: /gluetun
+        bind:
+          create_host_path: false
+  qbittorrent:
+    image: ${QBITTORRENT_IMAGE:?select a compatible LinuxServer qBittorrent image}
+    network_mode: service:gluetun
+    environment:
+      WEBUI_PORT: "8080"
+      PUID: ${QBITTORRENT_UID:?set the intended local UID}
+      PGID: ${QBITTORRENT_GID:?set the intended local GID}
+    volumes:
+      - type: bind
+        source: ${QBITTORRENT_CONFIG_DIR:?set the config directory}
+        target: /config
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${MEDIA_ROOT:?set the verified media root}
+        target: /data
+        bind:
+          create_host_path: false

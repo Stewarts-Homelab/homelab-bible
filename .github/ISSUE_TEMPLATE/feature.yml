@@ -1,0 +1,20 @@
+name: Feature request
+description: Propose a build or documentation improvement
+body:
+  - type: markdown
+    attributes:
+      value: Share sanitized information only. Remove keys, passwords, private endpoints and identifying logs.
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Describe the use case, expected benefit, scope and how to verify it.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or acceptance checks
+      description: Add sanitized output or describe how success can be checked.
+    validations:
+      required: false

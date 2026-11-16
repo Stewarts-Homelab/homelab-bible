@@ -1,0 +1,8 @@
+# Local settings, secrets and rendered configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.conf.private
+compose.rendered.*
