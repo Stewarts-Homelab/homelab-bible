@@ -2,8 +2,11 @@
 
 A practical manual for building, operating, and troubleshooting an Ubuntu-based homelab and media server. Start with the deployment gates. Use the operations guides to diagnose the host and services before making changes.
 
+![Homelab Bible Hardware and Storage Planning](assets/hardware-overview.png)
+
 | Start here | Purpose |
 | --- | --- |
+| [Start Here: Hardware and Storage Planning](docs/deployment/00-hardware-storage-planning.md) | Begin here if you're new. Choose your equipment, understand your storage needs, and plan your first homelab. |
 | [Deployment roadmap](docs/deployment/README.md) | Follow installation, storage, Docker, services, recovery and handoff in dependency order. |
 | [Ubuntu Server foundation](docs/deployment/01-ubuntu-server-foundation.md) | Prepare an expendable OS disk, install Ubuntu Server 24.04 LTS amd64, and verify first boot. The isolated install rehearsal is pending. |
 | [Operations by symptom](docs/operations/README.md) | Find the right guide for storage, Docker, DNS, reachability or logs. |
