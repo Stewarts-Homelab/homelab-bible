@@ -1,0 +1,23 @@
+# Reconstructed template. Runtime validation pending.
+services:
+  jellyfin:
+    image: ${JELLYFIN_IMAGE:?select a versioned Jellyfin image}
+    ports:
+      - "127.0.0.1:${JELLYFIN_HOST_PORT:-8096}:8096"
+    volumes:
+      - type: bind
+        source: ${JELLYFIN_CONFIG_DIR:?set the config directory}
+        target: /config
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${JELLYFIN_CACHE_DIR:?set the cache directory}
+        target: /cache
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${MEDIA_ROOT:?set the verified media root}
+        target: /media
+        read_only: true
+        bind:
+          create_host_path: false
